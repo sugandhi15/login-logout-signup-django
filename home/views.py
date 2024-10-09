@@ -35,3 +35,15 @@ def logout(request):
         return redirect('/login')
     except Exception as e:
         return HttpResponse(e)
+    
+def signup(request):
+    try:
+        if request.method=='POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = User.objects.create_user(username=username,password=password)
+            user.save()
+            return HttpResponse("saved")
+        return render(request,'signup.html')
+    except Exception as e:
+        return HttpResponse("Error Occured",e)
